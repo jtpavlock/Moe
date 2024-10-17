@@ -51,7 +51,8 @@ class Hooks:
         Returns:
             An optional string representing the new album path configuration.
             If None is returned, the default configuration will be used.
-        """
+        """  # noqa: DAR202
+
 
 @moe.hookimpl
 def add_hooks(pm: pluggy._manager.PluginManager):
@@ -122,11 +123,11 @@ def fmt_item_path(item: LibItem, parent: Optional[Path] = None) -> Path:
 
     if isinstance(item, Album):
         parent = parent or Path(config.CONFIG.settings.library_path).expanduser()
-        
+
         # Potentially override the album path config.
         override_result = config.CONFIG.pm.hook.override_album_path_config(album=item)
         album_path_config = override_result or config.CONFIG.settings.move.album_path
-        
+
         # Ensure `album_path_config`` is a string
         if isinstance(album_path_config, list):
             album_path_config = album_path_config[0] if album_path_config else ""
